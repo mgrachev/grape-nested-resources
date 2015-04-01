@@ -19,7 +19,7 @@ module Grape
 
           Grape::Validations::ParamsScope.new(api: self, type: Hash) do
             [root, *[prepared_value]].flatten.each do |param|
-              attr = "#{param.singularize}_id"
+              attr = param.singularize.foreign_key
               requires attr.to_sym, type: Integer, desc: attr.titleize
             end
           end
@@ -34,7 +34,7 @@ module Grape
         target = elements.pop
 
         rest_uri = elements.flat_map do |element|
-          [element, ":#{element.singularize}_id"]
+          [element, ":#{element.singularize.foreign_key}"]
         end
         rest_uri.push(target).join('/')
       end
