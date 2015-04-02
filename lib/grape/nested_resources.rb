@@ -2,6 +2,9 @@ require 'grape'
 require 'active_support/concern'
 require 'active_support/core_ext/string/inflections'
 
+require_relative 'nested_resources/validations/depends_of'
+require_relative 'nested_resources/validations/params_scope'
+
 module Grape
   module NestedResources
     extend ActiveSupport::Concern
