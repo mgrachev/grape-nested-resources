@@ -17,15 +17,20 @@ module Grape
           paths << _build_rest_uri(root, *prepared_value)
           paths << prepared_value.pop
 
-          Grape::Validations::ParamsScope.new(api: self, type: Hash) do
-            [root, *[prepared_value]].flatten.each do |param|
-              attr = param.singularize.foreign_key
-              requires attr.to_sym, type: Integer, desc: attr.titleize
-            end
+          nested_params = [root, *[prepared_value]].flatten.map do |param|
+            param.singularize.foreign_key
           end
 
-          paths.each { |path| yield path }
+          paths.each do |path|
+            resource path do
+              yield nested_params
+            end
+          end
         end
+      end
+
+      def add_required_params(params)
+        Grape::Validations::ParamsScope.new(api: self, type: Hash).add_required_params(params)
       end
 
       private
