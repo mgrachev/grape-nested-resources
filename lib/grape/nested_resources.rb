@@ -2,9 +2,6 @@ require 'grape'
 require 'active_support/concern'
 require 'active_support/core_ext/string/inflections'
 
-require_relative 'nested_resources/validations/depends_of'
-require_relative 'nested_resources/validations/params_scope'
-
 module Grape
   module NestedResources
     extend ActiveSupport::Concern
@@ -45,6 +42,9 @@ module Grape
 
   end
 end
+
+require_relative 'nested_resources/validations/depends_on'
+require_relative 'nested_resources/validations/params_scope'
 
 if defined? Grape
   Grape::API.send(:include, Grape::NestedResources)

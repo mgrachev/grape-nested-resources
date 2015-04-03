@@ -2,7 +2,7 @@ require 'active_support/core_ext/object/blank'
 
 module Grape
   module Validations
-    class DependsOf < Grape::Validations::Base
+    class DependsOn < Grape::Validations::Base
 
       def validate!(params)
         attributes = Grape::Validations::AttributesIterator.new(self, @scope, params)
